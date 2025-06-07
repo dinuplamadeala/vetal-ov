@@ -1,6 +1,6 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwGKXaiW2kBj9BSpOUrsMr9IpDYQIVhXL8YS87Igng8KG45XIUaWRGLSleRE5PgDp_X/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwGKXaiW2kBj9BSpOUrsMr9IpDYQIVhXL8YS87Igng8KG45XIUaWRGLSleRE5PgDp_X/exec'; 
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".add-to-cart").forEach(link => {
@@ -81,6 +81,7 @@ function showAddedToCartMessage() {
         setTimeout(() => message.classList.remove('show'), 3000);
     }
 }
+
 
 const orderButton = document.getElementById('orderButton');
 const overlay = document.getElementById('overlay');
@@ -165,12 +166,12 @@ step2Form?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const data = {
-        name: document.getElementById('name').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        cardNumber: document.getElementById('cardNumber').value.trim(),
-        expiry: document.getElementById('expiry').value.trim(),
-        cvv: document.getElementById('cvv').value.trim(),
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        cardNumber: document.getElementById('cardNumber').value,
+        expiry: document.getElementById('expiry').value,
+        cvv: document.getElementById('cvv').value,
         cart: cart.map(item => `${item.name} (x${item.quantity}) - ${item.price} MDL`).join(', ')
     };
 
@@ -180,19 +181,13 @@ step2Form?.addEventListener('submit', async (event) => {
     }
 
     try {
-        const response = await fetch(scriptURL, {
+        await fetch(scriptURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(data).toString()
+            body: new URLSearchParams(data)
         });
 
-        const text = await response.text();
-
-        if (response.ok && text.includes("Success")) {
-            alert("Comanda a fost trimisă cu succes!");
-        } else {
-            alert("A apărut o eroare la salvarea comenzii: " + text);
-        }
+        alert("Comanda a fost trimisă cu succes!");
 
         cart = [];
         localStorage.removeItem('cart');
@@ -206,11 +201,6 @@ step2Form?.addEventListener('submit', async (event) => {
         setTimeout(() => {
             step2Window.style.display = 'none';
         }, 300);
-
-    } catch (error) {
-        console.error("Eroare la trimiterea comenzii:", error);
-        alert("A apărut o eroare. Vă rugăm să încercați din nou.");
-    }
 });
 
 overlay?.addEventListener('click', () => {
@@ -220,4 +210,6 @@ overlay?.addEventListener('click', () => {
         [step1Window, confirmOrderWindow, step2Window].forEach(win => win.style.display = 'none');
     }, 300);
 });
+
+
 
