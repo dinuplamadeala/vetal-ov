@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VETAL-OV STORE</title>
+    <link rel="stylesheet" href="../CSS/vetal1.css">
+    <link rel="icon" type="image/x-icon" href="../Images/main/logo.jpg">
+</head>
+
+<body>
+  <div class="intro">
+    <img src="../Images/main/05.png" alt="">
+    <p id="pompa">Pompe de căldură, panouri solare</p>
+   <a href="#products"> <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+      </svg>
+    </a>
+  </div>
+  <p id="products">.</p>
+  <p id="products">.</p>
+  <p id="products">.</p>
+  <header>
+    <header id="menu0">
+      <h3 class="logo">VETAL-OV STORE</h3>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <ul class="menu-main">
+        <li><a href="../index.html">Acasă</a></li>
+          <li><a href="#products" class="current">Magazin</a></li>
+          <li><a href="../Pages/info.html">Despre noi</a></li>
+          <li><a href="#contact">Contacte</a></li>
+          <li><a id="cos" onclick="toggleCart()"> <img src="../Images/main/icons8-cart-96.png" alt="" width="26px" height="20px"> (<span id="cart-count">0</span>)</a></li>
+      </ul>
+    </header>
+        <div class="cart" id="cart">
+          <h2>Coș</h2>
+          <div id="cart-items"></div>
+          <p>Total: <span id="total-price">0</span> MDL</p>
+          <button onclick="toggleCart()">Închide</button>
+          <button onclick="toggleCart()" id="orderButton">Comandă</button>
+      </div>
+  </header>
+
+
+  <div id="overlay" class="overlay"></div>
+
+
+  <div id="step1Window" class="floating-window">
+      <div class="window-content">
+          <h2>Întroduceți datele necesare</h2>
+          <form id="step1Form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="ae1b6354-3f57-4f98-a702-fd9f501b78f9">
+              <div class="form-group">
+                  <label for="name">Nume, prenume:</label>
+                  <input type="text" id="name" name="name" required>
+              </div>
+              <div class="form-group">
+                  <label for="phone">Număr de telefon:</label>
+                  <input type="tel" id="phone" name="phone" required>
+              </div>
+              <div class="form-group">
+                  <label for="address">Adresa</label>
+                  <textarea id="address" name="address" rows="3" required></textarea>
+              </div>
+              <button type="submit">Continuă</button>
+          </form>
+      </div>
+  </div>
+
+  <div id="confirmOrderWindow" class="floating-window">
+      <div class="window-content">
+          <h2>Confirmarea comenzii:</h2>
+          <div id="cart-items-confirm"></div>
+          <p>Suma totală: <span id="total-price-confirm"></span> MDL</p>
+          <button id="confirmOrderButton">Confirmă comanda</button>
+          <button id="editOrderButton">Modifică comanda</button>
+      </div>
+  </div>
+
+  <div id="step2Window" class="floating-window">
+      <div class="window-content">
+          <h2>Întroduceți datele necesare</h2>
+          <form id="step2Form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="ae1b6354-3f57-4f98-a702-fd9f501b78f9">
+              <div class="form-group">
+                  <label for="cardNumber">Număr de card bancar:</label>
+                  <input type="text" id="cardNumber" name="cardNumber" required>
+              </div>
+              <div class="form-group">
+                  <label for="expiry">Data expirării:</label>
+                  <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
+              </div>
+              <div class="form-group">
+                  <label for="cvv">CVV:</label>
+                  <input type="text" id="cvv" name="cvv" required>
+              </div>
+              <button type="submit" >Achită</button>
+          </form>
+      </div>
+  </div>
+
+  <div class="products">
+    <h1>O opțiune ecologică și economică pentru încălzire și răcire. Descoperiți pompele noastre de căldură performante, ideale pentru eficiență energetică și reducerea costurilor de întreținere.</h1>
+  </div>
+  <hr>
+  <div class="menu">
+    <div class="item" data-name="POMPA DE CALDURA AER-APA" data-price="93730" data-img="../Images/pompe/p1.webp">
+        <img src="../Images/pompe/p1.webp" >
+        <h3 >POMPA DE CALDURA AER-APA INCALZIRE/RACIRE, SPLIT, ECOHEAT BY MIDEA</h3>
+        <div class="price">93 730 MDL</div>
+        <button class="cartbtn" onclick="addToCart(this)">Adaugă în coș</button>
+    </div>
+    <div div class="item" data-name="UNITATE EXTERNA POMPA DE CALDURA" data-price="50798" data-img="../Images/pompe/p2.webp">
+        <img src="../Images/pompe/p2.webp"  >
+        <h3>UNITATE EXTERNA POMPA DE CALDURA AER-APA CLIVET, R32, 8KW, 230V</h3>
+        <div class="price"> 50 798 MDL</div>
+        <button class="cartbtn"  onclick="addToCart(this)">Adaugă în coș</button>
+    </div> <br>
+    <div div class="item" data-name="UNITATE INTERNA POMPA DE CALDURA" data-price="125388" data-img="../Images/pompe/p3.webp">
+        <img src="../Images/pompe/p3.webp" >
+        <h3>UNITATE INTERNA POMPA DE CALDURA AER-APA CLIVET, HYDROTANK SPLIT 250L, R32, 12-16KW, 380V</h3>
+        <div class="price">125 388 MDL</div>
+        <button  class="cartbtn" onclick="addToCart(this)">Adaugă în coș</button>
+    </div>
+    <div div class="item" data-name="ACUMULATOR AGENT TERMIC" data-price="10427" data-img="../Images/pompe/p4.webp">
+        <img src="../Images/pompe/p4.webp" >
+        <h3>ACUMULATOR AGENT TERMIC POMPE DE CALDURA, CORDIVARI, 50L</h3>
+        <div class="price"> 10 427 MDL</div>
+        <button  class="cartbtn"onclick="addToCart(this)">Adaugă în coș</button>
+    </div>
+    <div div class="item" data-name="PANOU FOTOVOLTAIC MONOCRISTAL" data-price="3091" data-img="../Images/pompe/p5.webp">
+        <img src="../Images/pompe/p5.webp" >
+        <h3>PANOU FOTOVOLTAIC MONOCRISTAL TRINA SOLAR 425W</h3>
+        <div class="price">3 091 MDL</div>
+        <button class="cartbtn" onclick="addToCart(this)">Adaugă în coș</button>
+    </div>
+    <div div class="item" data-name="PANOU SOLAR PLAN VISION" data-price="9161" data-img="../Images/pompe/p6.webp">
+      <img src="../Images/pompe/p6.webp">
+      <h3>PANOU SOLAR PLAN VISION 2 m2</h3>
+      <div class="price">9 161 MDL</div>
+      <button class="cartbtn" onclick="addToCart(this)">Adaugă în coș</button>
+  </div>
+</div>
+<div class="podval" id="contact">
+    <p>+373 68626470 <br>
+        vetal.ov.company@gmail.com
+         </p>
+         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+          </svg>
+        <div id="cart-message">Adăugat cu succes în coș!</div>
+
+        <div id="empty-cart-message" class="empty-cart-message">
+          Coșul este gol! Adăugați produse înainte de a plasa o comandă.
+      </div>
+
+      <script src="../JS/v1.js"></script>
+</div>
+</body>
+</html>
