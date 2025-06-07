@@ -165,27 +165,30 @@ editOrderButton?.addEventListener('click', () => {
 step2Form?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const data = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-        cardNumber: document.getElementById('cardNumber').value,
-        expiry: document.getElementById('expiry').value,
-        cvv: document.getElementById('cvv').value,
-        cart: cart.map(item => `${item.name} (x${item.quantity}) - ${item.price} MDL`).join(', ')
-    };
+    const formData = new FormData();
+    formData.append('name', document.getElementById('name').value.trim());
+    formData.append('phone', document.getElementById('phone').value.trim());
+    formData.append('address', document.getElementById('address').value.trim());
+    formData.append('cardNumber', document.getElementById('cardNumber').value.trim());
+    formData.append('expiry', document.getElementById('expiry').value.trim());
+    formData.append('cvv', document.getElementById('cvv').value.trim()); // sau elimină-l pentru siguranță
+    formData.append('cart', cart.map(item => `${item.name} (x${item.quantity}) - ${item.price} MDL`).join(', '));
 
-    if (!data.name || !data.phone || !data.address || !data.cardNumber || !data.expiry || !data.cvv) {
-        alert("Vă rugăm să completați toate câmpurile.");
-        return;
+    // Verifică dacă toate câmpurile sunt completate
+    for (const [key, value] of formData.entries()) {
+        if (!value) {
+            alert("Vă rugăm să completați toate câmpurile.");
+            return;
+        }
     }
 
     try {
-        await fetch(scriptURL, {
+        const response = await fetch(scriptURL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(data)
+            body: formData
         });
+
+        if (!response.ok) throw new Error("Network response was not ok");
 
         alert("Comanda a fost trimisă cu succes!");
 
@@ -206,6 +209,8 @@ step2Form?.addEventListener('submit', async (event) => {
         console.error("Eroare la trimiterea comenzii:", error);
         alert("A apărut o eroare. Vă rugăm să încercați din nou.");
     }
+});
+
 });
 
 overlay?.addEventListener('click', () => {
