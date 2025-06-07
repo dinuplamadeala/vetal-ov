@@ -201,6 +201,11 @@ step2Form?.addEventListener('submit', async (event) => {
         setTimeout(() => {
             step2Window.style.display = 'none';
         }, 300);
+
+    } catch (error) {
+        console.error("Eroare la trimiterea comenzii:", error);
+        alert("A apărut o eroare. Vă rugăm să încercați din nou.");
+    }
 });
 
 overlay?.addEventListener('click', () => {
@@ -210,6 +215,4 @@ overlay?.addEventListener('click', () => {
         [step1Window, confirmOrderWindow, step2Window].forEach(win => win.style.display = 'none');
     }, 300);
 });
-
-
 
