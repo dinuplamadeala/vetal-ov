@@ -1,6 +1,6 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwGKXaiW2kBj9BSpOUrsMr9IpDYQIVhXL8YS87Igng8KG45XIUaWRGLSleRE5PgDp_X/exec'; 
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwGKXaiW2kBj9BSpOUrsMr9IpDYQIVhXL8YS87Igng8KG45XIUaWRGLSleRE5PgDp_X/exec';
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".add-to-cart").forEach(link => {
@@ -81,7 +81,6 @@ function showAddedToCartMessage() {
         setTimeout(() => message.classList.remove('show'), 3000);
     }
 }
-
 
 const orderButton = document.getElementById('orderButton');
 const overlay = document.getElementById('overlay');
@@ -165,32 +164,35 @@ editOrderButton?.addEventListener('click', () => {
 step2Form?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append('name', document.getElementById('name').value.trim());
-    formData.append('phone', document.getElementById('phone').value.trim());
-    formData.append('address', document.getElementById('address').value.trim());
-    formData.append('cardNumber', document.getElementById('cardNumber').value.trim());
-    formData.append('expiry', document.getElementById('expiry').value.trim());
-    formData.append('cvv', document.getElementById('cvv').value.trim()); // sau elimină-l pentru siguranță
-    formData.append('cart', cart.map(item => `${item.name} (x${item.quantity}) - ${item.price} MDL`).join(', '));
+    const data = {
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        cardNumber: document.getElementById('cardNumber').value.trim(),
+        expiry: document.getElementById('expiry').value.trim(),
+        cvv: document.getElementById('cvv').value.trim(),
+        cart: cart.map(item => `${item.name} (x${item.quantity}) - ${item.price} MDL`).join(', ')
+    };
 
-    // Verifică dacă toate câmpurile sunt completate
-    for (const [key, value] of formData.entries()) {
-        if (!value) {
-            alert("Vă rugăm să completați toate câmpurile.");
-            return;
-        }
+    if (!data.name || !data.phone || !data.address || !data.cardNumber || !data.expiry || !data.cvv) {
+        alert("Vă rugăm să completați toate câmpurile.");
+        return;
     }
 
     try {
         const response = await fetch(scriptURL, {
             method: 'POST',
-            body: formData
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data).toString()
         });
 
-        if (!response.ok) throw new Error("Network response was not ok");
+        const text = await response.text();
 
-        alert("Comanda a fost trimisă cu succes!");
+        if (response.ok && text.includes("Success")) {
+            alert("Comanda a fost trimisă cu succes!");
+        } else {
+            alert("A apărut o eroare la salvarea comenzii: " + text);
+        }
 
         cart = [];
         localStorage.removeItem('cart');
@@ -211,8 +213,6 @@ step2Form?.addEventListener('submit', async (event) => {
     }
 });
 
-});
-
 overlay?.addEventListener('click', () => {
     [step1Window, confirmOrderWindow, step2Window].forEach(win => win?.classList.remove('active'));
     overlay.style.display = 'none';
@@ -220,4 +220,5 @@ overlay?.addEventListener('click', () => {
         [step1Window, confirmOrderWindow, step2Window].forEach(win => win.style.display = 'none');
     }, 300);
 });
+
 
